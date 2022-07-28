@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Вход";
+}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <form method="post" class="needs-validation" novalidate>
+                <div class="mb-2">
+                    <label class="form-label" for="inputEmail">Email</label>
+                    <input type="email" name="inputEmail" class="form-control" id="inputEmail" placeholder="Email" required>
+                    <div class="invalid-feedback">Введите правильный адрес электронной почты</div>
+
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" for="inputPassword">Пароль</label>
+                    <input type="password" name="inputPassword" class="form-control @ViewBag.WrongPassword" id="inputPassword" placeholder="Пароль" required>
+                    <div class="invalid-feedback">Неверный пароль</div>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Вход</button>
+                </div>
+                <div><a class="disabled link-secondary" asp-action="Register">Регистрация</a></div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts{
+<script>
+    (function() {
+        window.addEventListener('load', function() {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+}

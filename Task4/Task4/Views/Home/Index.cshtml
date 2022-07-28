@@ -1,0 +1,86 @@
+﻿@model List<User>
+@{
+    ViewData["Title"] = "Панель управления";
+}
+<form>
+    <div class="btn-group mb-1 d-flex">
+        <button type="button" class="btn btn-warning block-users">
+            <i class="bi-x-circle "></i> Заблокировать
+        </button>
+        <button type="button" class="btn btn-success unblock-users">
+            <i class="bi-check-circle "></i> Разблокировать
+        </button>
+        <button type="button" class="btn btn-danger delete-users">
+            <i class="bi-eraser"></i> Удалить
+        </button>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th><input class="form-check-input" type="checkbox" id="checkAll"></th>
+                    <th>Id</th>
+                    <th>Имя</th>
+                    <th>Email</th>
+                    <th>Статус</th>
+                    <th>Последний вход</th>
+                    <th>Дата регистрации</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (User user in Model)
+                {
+                    <tr>
+                        <td><input class="form-check-input userSelect" type="checkbox" id="userSelect@(user.Id)"></td>
+                        <td>@user.Id</td>
+                        <td>@user.Name</td>
+                        <td>@user.Email</td>
+                        <td>
+                            @if (user.IsBlocked)
+                            {
+                                <i class="bi-slash-circle" style="color:red" />
+                            }
+                            else
+                            {
+                                <i class="bi-check2-circle" style="color:green" />
+                            }
+                        </td>
+                        <td>@user.LastLoginDate</td>
+                        <td>@user.CreatedDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</form>
+<script>
+    document.querySelector('#checkAll').addEventListener('click',
+        ()=>document.querySelectorAll('.userSelect').forEach(check => check.checked = document.querySelector('#checkAll').checked));
+    document.querySelector('.block-users').addEventListener('click',
+    ()=>{
+        let url = '?';
+        for(let el of document.querySelectorAll('.userSelect:checked')){
+            url+='userId='+el.id.slice(10)+'&';
+        }
+        url=url.slice(0,-1);
+        window.location.href='../'+'Home/Block'+url;
+    });
+    document.querySelector('.unblock-users').addEventListener('click',
+    ()=>{
+        let url = '?';
+        for(let el of document.querySelectorAll('.userSelect:checked')){
+            url+='userId='+el.id.slice(10)+'&';
+        }
+        url=url.slice(0,-1);
+        window.location.href='../'+'Home/Unblock'+url;
+    });
+    document.querySelector('.delete-users').addEventListener('click',
+    ()=>{
+        let url = '?';
+        for(let el of document.querySelectorAll('.userSelect:checked')){
+            url+='userId='+el.id.slice(10)+'&';
+        }
+        url=url.slice(0,-1);
+        window.location.href='../'+'Home/Delete'+url;
+    });
+</script>
