@@ -1,11 +1,14 @@
 ﻿@{
-    ViewData["Title"] = "Главная";
+    ViewData["Title"] = "Task5";
 }
 <input type="hidden" id="userName" value="@ViewBag.UserName" />
-<div class="text-center">
-    <h1 class="display-6">Добро пожаловать, @ViewBag.UserName</h1>
+<div class="inbox page">
+    <div class="text-center">
+        <h1 class="display-6">Добро пожаловать, @ViewBag.UserName</h1>
+    </div>
+    <div class="table-responsive">
+        <table class="table" id="messagesTable">
+        </table>
+    </div>
 </div>
-<div class="table-responsive">
-    <table class="table" id="messagesTable">
-    </table>
-</div>
+@await Html.PartialAsync("WriteMessage")

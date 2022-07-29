@@ -1,8 +1,4 @@
-﻿@{
-    ViewBag.Title = "Написать письмо";
-}
-<input type="hidden" name="userName" value="@ViewBag.UserName" />
-<form method="post">
+﻿<form method="post" style="display:none" class="writeMessage page">
     <div class="row mb-3">
         <div class="col-sm-1">
             <label for="inputReciever" class="col-sm-2 col-form-label text-center">Получатель</label>
@@ -25,5 +21,4 @@
         </div>
     </div>
     <button type="submit" class="btn btn-primary">Отправить</button>
-    </div>
 </form>

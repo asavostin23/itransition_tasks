@@ -17,11 +17,10 @@ namespace Task5.Controllers
             db = applicationContext;
             this.hubContext = hubContext;
         }
-
+        [HttpGet]
         public IActionResult Index()
         {
             ViewBag.UserName = HttpContext.Session.GetString("name");
-
             return View();
         }
 
@@ -41,27 +40,14 @@ namespace Task5.Controllers
             HttpContext.Session.SetString("name", name);
             return RedirectToAction("Index");
         }
-        [HttpGet]
-        public IActionResult WriteMessage()
+        [HttpPost]
+        public async Task<IActionResult> Index(string title, string body, string reciever)
         {
             ViewBag.UserName = HttpContext.Session.GetString("name");
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> WriteMessage(string title, string body, string reciever)
-        {
-            if (HttpContext.Session.GetString("name") != null)
-            {
-                ViewBag.UserName = HttpContext.Session.GetString("name");
-                db.Messages.Add(new Message(title, body, ViewBag.UserName, reciever));
-                await db.SaveChangesAsync();
-                string recieverConnectionId = MessageHub.NamesConnectionIds.FirstOrDefault(el => el.Value == reciever).Key;
-                if (recieverConnectionId != null)
-                {
-                    //await hubContext.Clients.All.SendAsync("Debug", recieverConnectionId);
-                    await hubContext.Clients.Client(recieverConnectionId).SendAsync("UpdateMessages");
-                }
-            }
+            db.Messages.Add(new Message(title, body, ViewBag.UserName, reciever));
+            await db.SaveChangesAsync();
+            string recieverConnectionId = MessageHub.NamesConnectionIds.FirstOrDefault(el => el.Value == reciever).Key;
+            await hubContext.Clients.Client(recieverConnectionId).SendAsync("UpdateMessages");
             return RedirectToAction("Index");
         }
     }

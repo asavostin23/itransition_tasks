@@ -20,15 +20,12 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();
 app.UseRouting();
-
 app.MapWhen(context => !context.Session.Keys.Contains("name") && context.Request.Path != "/Home/Login",
     appBuilder => appBuilder.Run(async context => context.Response.Redirect("/Home/Login")));
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapHub<MessageHub>("/Messages");
@@ -36,6 +33,5 @@ app.UseEndpoints(endpoints =>
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 });
-
 
 app.Run();

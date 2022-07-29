@@ -12,10 +12,10 @@
 <body>
     <header>
         <nav class="nav mb-3">
-            <a class="nav-item nav-link" asp-controller="Home" asp-action="Index">
+            <a class="nav-item nav-link" onclick="switchPage('inbox')">
                 <i class="bi-envelope-open"></i> Входящие
             </a>
-            <a class="nav-item nav-link" asp-controller="Home" asp-action="WriteMessage">
+            <a class="nav-item nav-link" onclick="switchPage('writeMessage')">
                 <i class="bi-pen"></i> Написать письмо
             </a>
         </nav>
