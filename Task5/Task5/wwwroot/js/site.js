@@ -1,20 +1,27 @@
-﻿function getMessages() {
-    let userName = document.querySelector('#userName').value;
-    let url = '/api/GetMessages/' + userName;
-    let messagesTable = document.querySelector('#messagesTable');
-    if (messagesTable != null) {
-        messagesTable.innerHTML += '<tbody>';
-    }
-    let response = await fetch(url);
-    if (response.ok) {
-        let jsonMessages = await response.json();
-        let messages = JSON.parse(jsonMessages);
-        for (let message of messages) {
-            messagesTable.innerHTML += '<tr><td>' + message.sender + '</td><td>' + message.title + '</td><td>' + message.createdDate + '</td></tr>';
-        }
-        messagesTable.innerHTML += '</tbody>';
-    } else {
-        alert("Ошибка HTTP: " + response.status);
+﻿async function hubConnect() {
+    if (document.querySelector('#userName') != null) {
+        let userName = document.querySelector('#userName').value;
+        const hubConnection = new signalR.HubConnectionBuilder()
+            .withUrl('/Messages')
+            .build();
+        hubConnection.on('ReceiveMessages', messages => {
+            let messagesTable = document.querySelector('#messagesTable');
+            if (messagesTable != null) {
+                messagesTable.innerHTML += '<tbody>';
+                for (let message of messages) {
+                    messagesTable.innerHTML += '<tr><td>' + message.sender + '</td><td>' + message.title + '</td><td>' + message.createdDate + '</td></tr>';
+                }
+                messagesTable.innerHTML += '</tbody>';
+            }
+            else { alert('Новое сообщение!');}
+        });
+        hubConnection.on('UpdateMessages', () => {
+            hubConnection.invoke('SendMessages');
+        });
+        hubConnection.on('Debug', text => alert(text));
+        await hubConnection.start();
+        await hubConnection.invoke('Register', userName);
+        await hubConnection.invoke('SendMessages');
     }
 }
-let messagesTimer = setInterval(getMessages, 5000);
+hubConnect();

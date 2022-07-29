@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Diagnostics;
+using Task5.Hubs;
 using Task5.Models;
 
 namespace Task5.Controllers
@@ -8,16 +10,18 @@ namespace Task5.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         protected ApplicationContext db;
-
-        public HomeController(ILogger<HomeController> logger, ApplicationContext applicationContext)
+        protected IHubContext<MessageHub> hubContext;
+        public HomeController(ILogger<HomeController> logger, ApplicationContext applicationContext, IHubContext<MessageHub> hubContext)
         {
             _logger = logger;
             db = applicationContext;
+            this.hubContext = hubContext;
         }
 
         public IActionResult Index()
         {
             ViewBag.UserName = HttpContext.Session.GetString("name");
+
             return View();
         }
 
@@ -51,6 +55,12 @@ namespace Task5.Controllers
                 ViewBag.UserName = HttpContext.Session.GetString("name");
                 db.Messages.Add(new Message(title, body, ViewBag.UserName, reciever));
                 await db.SaveChangesAsync();
+                string recieverConnectionId = MessageHub.NamesConnectionIds.FirstOrDefault(el => el.Value == reciever).Key;
+                if (recieverConnectionId != null)
+                {
+                    //await hubContext.Clients.All.SendAsync("Debug", recieverConnectionId);
+                    await hubContext.Clients.Client(recieverConnectionId).SendAsync("UpdateMessages");
+                }
             }
             return RedirectToAction("Index");
         }

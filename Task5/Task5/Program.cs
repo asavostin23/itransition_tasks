@@ -1,10 +1,17 @@
 using Microsoft.EntityFrameworkCore;
+using Task5.Hubs;
+
 var builder = WebApplication.CreateBuilder(args);
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<Task5.Models.ApplicationContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
+builder.Services.AddSignalR(hubOptions =>
+{
+    hubOptions.EnableDetailedErrors = true;
+    hubOptions.KeepAliveInterval = System.TimeSpan.FromMinutes(10);
+});
 
 var app = builder.Build();
 
@@ -24,6 +31,7 @@ app.MapWhen(context => !context.Session.Keys.Contains("name") && context.Request
 
 app.UseEndpoints(endpoints =>
 {
+    endpoints.MapHub<MessageHub>("/Messages");
     endpoints.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
