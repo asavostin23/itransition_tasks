@@ -2,10 +2,21 @@
     ViewBag.Title = "Написать письмо";
 }
 <form method="post">
-    <label>Тема</label>
-    <input type="text" name="title"/>
-    <label>Кому</label>
-    <input type="text" name="reciever"/>
-    <input type="text" name="body"/>
-    <input type="submit" />
+    <div class="row mb-3">
+        <label for="inputReciever" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputReciever" placeholder="Имя получателя">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputTitle" class="col-sm-2 col-form-label">Тема</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputTitle" placeholder="Тема">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-10 offset-sm-2">
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </div>
+    </div>
 </form>

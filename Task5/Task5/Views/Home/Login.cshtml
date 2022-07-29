@@ -1,8 +1,8 @@
 ﻿@{
     ViewBag.Title = "Ввод имени";
 }
-<h3>Введите имя:</h3>
 <form method="post">
-    <input type="text" name="name" />
-    <input type="submit" />
+    <label for="inputName" class="form-label">Введите ваше имя</label>
+    <input type="text" class="form-control mb-1" name="name" id="inputName"/>
+    <button type="submit" class="btn btn-primary">Войти</button>
 </form>

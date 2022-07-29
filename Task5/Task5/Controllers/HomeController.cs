@@ -17,6 +17,7 @@ namespace Task5.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.UserName = HttpContext.Session.GetString("name");
             return View();
         }
 
