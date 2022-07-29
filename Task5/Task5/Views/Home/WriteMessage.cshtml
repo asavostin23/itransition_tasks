@@ -3,20 +3,26 @@
 }
 <form method="post">
     <div class="row mb-3">
-        <label for="inputReciever" class="col-sm-2 col-form-label">Email</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputReciever" placeholder="Имя получателя">
+        <div class="col-sm-1">
+            <label for="inputReciever" class="col-sm-2 col-form-label text-center">Получатель</label>
+        </div>
+        <div class="col-sm-11">
+            <input type="text" class="form-control" id="inputReciever" name="reciever" placeholder="Имя получателя">
         </div>
     </div>
     <div class="row mb-3">
-        <label for="inputTitle" class="col-sm-2 col-form-label">Тема</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputTitle" placeholder="Тема">
+        <div class="col-sm-1">
+            <label for="inputTitle" class="col-sm-2 col-form-label text-center">Тема</label>
+        </div>
+        <div class="col-sm-11">
+            <input type="text" class="form-control" id="inputTitle" name="title" placeholder="Тема">
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-10 offset-sm-2">
-            <button type="submit" class="btn btn-primary">Отправить</button>
+    <div class="row mb-3">
+        <div class="col">
+            <textarea class="form-control md-textarea" id="inputBody" rows="8" name="body" placeholder="Введите сообщение"></textarea>
         </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Отправить</button>
     </div>
 </form>

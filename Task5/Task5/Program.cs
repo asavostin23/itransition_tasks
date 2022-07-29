@@ -22,8 +22,12 @@ app.UseRouting();
 app.MapWhen(context => !context.Session.Keys.Contains("name") && context.Request.Path != "/Home/Login",
     appBuilder => appBuilder.Run(async context => context.Response.Redirect("/Home/Login")));
 
-app.MapControllerRoute(
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+});
+
 
 app.Run();

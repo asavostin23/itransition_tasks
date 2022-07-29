@@ -40,6 +40,7 @@ namespace Task5.Controllers
         [HttpGet]
         public IActionResult WriteMessage()
         {
+            ViewBag.UserName = HttpContext.Session.GetString("name");
             return View();
         }
         [HttpPost]
@@ -47,7 +48,8 @@ namespace Task5.Controllers
         {
             if (HttpContext.Session.GetString("name") != null)
             {
-                db.Messages.Add(new Message(title, body, HttpContext.Session.GetString("name"), reciever));
+                ViewBag.UserName = HttpContext.Session.GetString("name");
+                db.Messages.Add(new Message(title, body, ViewBag.UserName, reciever));
                 await db.SaveChangesAsync();
             }
             return RedirectToAction("Index");
