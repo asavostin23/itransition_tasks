@@ -29,5 +29,12 @@ namespace Task5.Hubs
                 MessageHub.NamesConnectionIds[Context.ConnectionId] = name;
             }
         }
+        public async Task SendAutocompleteData()
+        {
+            List<String> users = db.Messages.Select(message => message.Sender)
+                .Union(db.Messages.Select(message => message.Reciever))
+                .ToList();
+            await Clients.Caller.SendAsync("RecieveAutocompleteData", users);
+        }
     }
 }

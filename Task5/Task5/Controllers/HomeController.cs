@@ -47,7 +47,8 @@ namespace Task5.Controllers
             db.Messages.Add(new Message(title, body, ViewBag.UserName, reciever));
             await db.SaveChangesAsync();
             string recieverConnectionId = MessageHub.NamesConnectionIds.FirstOrDefault(el => el.Value == reciever).Key;
-            await hubContext.Clients.Client(recieverConnectionId).SendAsync("UpdateMessages");
+            if (recieverConnectionId != null)
+                await hubContext.Clients.Client(recieverConnectionId).SendAsync("UpdateMessages");
             return RedirectToAction("Index");
         }
     }
