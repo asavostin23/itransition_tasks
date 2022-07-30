@@ -22,7 +22,7 @@ namespace Task5.Hubs
             List<Message> messages = db.Messages.Where(message => message.Reciever == userName).ToList();
             await Clients.Caller.SendAsync("ReceiveMessages", messages);
         }
-        public void Register(string name)
+        public async Task Register(string name)
         {
             lock (NamesConnectionIds)
             {

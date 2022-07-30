@@ -40,17 +40,5 @@ namespace Task5.Controllers
             HttpContext.Session.SetString("name", name);
             return RedirectToAction("Index");
         }
-        //[HttpPost]
-        //public async Task<IActionResult> Index(string title, string body, string reciever)
-        //{
-        //    ViewBag.UserName = HttpContext.Session.GetString("name");
-        //    db.Messages.Add(new Message(title, body, ViewBag.UserName, reciever));
-        //    await db.SaveChangesAsync();
-        //    string recieverConnectionId = MessageHub.NamesConnectionIds.FirstOrDefault(el => el.Value == reciever).Key;
-        //    if (recieverConnectionId != null)
-        //        await hubContext.Clients.Client(recieverConnectionId).SendAsync("UpdateMessages");
-        //    return View();
-        //    //return RedirectToAction("Index");
-        //}
     }
 }

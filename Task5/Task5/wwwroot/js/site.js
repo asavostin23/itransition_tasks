@@ -5,8 +5,6 @@
 }
 
 async function hubConnect() {
-
-    let userName = document.querySelector('#userName').value;
     const hubConnection = new signalR.HubConnectionBuilder()
         .withUrl('/Messages')
         .build();
@@ -21,32 +19,30 @@ async function hubConnect() {
         if (document.querySelector('.inbox').style.display == 'none')
             alert('Новое сообщение!');
     });
-    hubConnection.on('UpdateMessages', () => {
-        hubConnection.invoke('SendMessages');
-    });
+    hubConnection.on('UpdateMessages', async () => await hubConnection.invoke('SendMessages'));
     hubConnection.on('RecieveAutocompleteData', users => autocomplete(document.querySelector('#inputReciever'), users));
+
     await hubConnection.start();
+
+    let userName = document.querySelector('#userName').value;
     await hubConnection.invoke('Register', userName);
     await hubConnection.invoke('SendMessages');
     await hubConnection.invoke('SendAutocompleteData');
     $(function () {
         $('[data-toggle="popover"]').popover()
-    })
-    return hubConnection;
+    });
 
+    document.querySelector('#sendMessageButton').addEventListener('click', async function () {
+        let reciever = document.querySelector('#inputReciever');
+        let title = document.querySelector('#inputTitle');
+        let body = document.querySelector('#inputBody');
+        let sender = document.querySelector('#userName');
+        if (reciever != null && title != null && body != null && userName != null) {
+            await hubConnection.invoke('GetMessage', sender.value, title.value, body.value, reciever.value);
+        }
+    });
 }
 
-async function sendMessage() {
-    let reciever = document.querySelector('#inputReciever');
-    let title = document.querySelector('#inputTitle');
-    let body = document.querySelector('#inputBody');
-    let sender = document.querySelector('#userName');
-    const hubConnection = hubConnect();
-    if (hubConnection != null && reciever != null && title != null && body != null && userName != null) {
-        await hubConnection.invoke('GetMessage', sender.value, title.value, body.value, reciever.value);
-    }
-    else { alert('Ошибка отправки!'); }
-}
 function autocomplete(inp, arr) {
     var currentFocus;
     inp.addEventListener("input", function (e) {
@@ -112,7 +108,6 @@ function autocomplete(inp, arr) {
         closeAllLists(e.target);
     });
 }
-
 
 if (document.querySelector('#userName') != null) {
     hubConnect();
