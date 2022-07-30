@@ -36,5 +36,13 @@ namespace Task5.Hubs
                 .ToList();
             await Clients.Caller.SendAsync("RecieveAutocompleteData", users);
         }
+        public async Task GetMessage(string sender, string title, string body, string reciever)
+        {
+            db.Messages.Add(new Message(title, body, sender, reciever));
+            await db.SaveChangesAsync();
+            string recieverConnectionId = MessageHub.NamesConnectionIds.FirstOrDefault(el => el.Value == reciever).Key;
+            if (recieverConnectionId != null)
+                await Clients.Client(recieverConnectionId).SendAsync("UpdateMessages");
+        }
     }
 }

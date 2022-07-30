@@ -5,37 +5,48 @@
 }
 
 async function hubConnect() {
-    if (document.querySelector('#userName') != null) {
-        let userName = document.querySelector('#userName').value;
-        const hubConnection = new signalR.HubConnectionBuilder()
-            .withUrl('/Messages')
-            .build();
-        hubConnection.serverTimeoutInMilliseconds = 600000;
-        hubConnection.on('ReceiveMessages', messages => {
-            let messagesTable = document.querySelector('#messagesTable');
-            messagesTable.innerHTML = '<tbody>';
-            for (let message of messages) {
-                messagesTable.innerHTML += '<tr><td>' + message.sender + '</td><td> <button type="button" class="btn-no-style" data-toggle="popover" title="' + message.body + '">' + message.title + '</button></td><td>' + message.createdDate + '</td></tr>';
-            }
-            messagesTable.innerHTML += '</tbody>';
-            if (document.querySelector('.inbox').style.display == 'none')
-                alert('Новое сообщение!');
-        });
-        hubConnection.on('UpdateMessages', () => {
-            hubConnection.invoke('SendMessages');
-        });
-        hubConnection.on('RecieveAutocompleteData', users => autocomplete(document.querySelector('#inputReciever'), users));
-        await hubConnection.start();
 
-        await hubConnection.invoke('Register', userName);
-        await hubConnection.invoke('SendMessages');
-        await hubConnection.invoke('SendAutocompleteData');
-        $(function () {
-            $('[data-toggle="popover"]').popover()
-        })
-    }
+    let userName = document.querySelector('#userName').value;
+    const hubConnection = new signalR.HubConnectionBuilder()
+        .withUrl('/Messages')
+        .build();
+    hubConnection.serverTimeoutInMilliseconds = 600000;
+    hubConnection.on('ReceiveMessages', messages => {
+        let messagesTable = document.querySelector('#messagesTable');
+        messagesTable.innerHTML = '<tbody>';
+        for (let message of messages) {
+            messagesTable.innerHTML += '<tr><td>' + message.sender + '</td><td> <button type="button" class="btn-no-style" data-toggle="popover" title="' + message.body + '">' + message.title + '</button></td><td>' + message.createdDate + '</td></tr>';
+        }
+        messagesTable.innerHTML += '</tbody>';
+        if (document.querySelector('.inbox').style.display == 'none')
+            alert('Новое сообщение!');
+    });
+    hubConnection.on('UpdateMessages', () => {
+        hubConnection.invoke('SendMessages');
+    });
+    hubConnection.on('RecieveAutocompleteData', users => autocomplete(document.querySelector('#inputReciever'), users));
+    await hubConnection.start();
+    await hubConnection.invoke('Register', userName);
+    await hubConnection.invoke('SendMessages');
+    await hubConnection.invoke('SendAutocompleteData');
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
+    return hubConnection;
+
 }
 
+async function sendMessage() {
+    let reciever = document.querySelector('#inputReciever');
+    let title = document.querySelector('#inputTitle');
+    let body = document.querySelector('#inputBody');
+    let sender = document.querySelector('#userName');
+    const hubConnection = hubConnect();
+    if (hubConnection != null && reciever != null && title != null && body != null && userName != null) {
+        await hubConnection.invoke('GetMessage', sender.value, title.value, body.value, reciever.value);
+    }
+    else { alert('Ошибка отправки!'); }
+}
 function autocomplete(inp, arr) {
     var currentFocus;
     inp.addEventListener("input", function (e) {
@@ -102,4 +113,7 @@ function autocomplete(inp, arr) {
     });
 }
 
-hubConnect();
+
+if (document.querySelector('#userName') != null) {
+    hubConnect();
+}

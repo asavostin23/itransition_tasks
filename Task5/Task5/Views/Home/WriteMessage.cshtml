@@ -1,4 +1,4 @@
-﻿<form method="post" style="display:none" class="writeMessage page" autocomplete="off">
+﻿<form style="display:none" class="writeMessage page" autocomplete="off">
     <div class="row mb-3">
         <div class="col-sm-2">
             <label for="inputReciever" class="col-sm-2 col-form-label text-center">Получатель</label>
@@ -20,5 +20,5 @@
             <textarea class="form-control md-textarea" id="inputBody" rows="8" name="body" placeholder="Введите сообщение"></textarea>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary">Отправить</button>
+    <button class="btn btn-primary" onclick="sendMessage()">Отправить</button>
 </form>
