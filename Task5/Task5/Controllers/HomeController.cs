@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.Diagnostics;
-using Task5.Hubs;
 using Task5.Models;
 
 namespace Task5.Controllers
@@ -10,12 +9,10 @@ namespace Task5.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         protected ApplicationContext db;
-        protected IHubContext<MessageHub> hubContext;
-        public HomeController(ILogger<HomeController> logger, ApplicationContext applicationContext, IHubContext<MessageHub> hubContext)
+        public HomeController(ILogger<HomeController> logger, ApplicationContext applicationContext)
         {
             _logger = logger;
             db = applicationContext;
-            this.hubContext = hubContext;
         }
         [HttpGet]
         public IActionResult Index()

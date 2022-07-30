@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Task5.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -28,7 +27,6 @@ app.MapWhen(context => !context.Session.Keys.Contains("name") && context.Request
     appBuilder => appBuilder.Run(async context => context.Response.Redirect("/Home/Login")));
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapHub<MessageHub>("/Messages");
     endpoints.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

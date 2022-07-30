@@ -1,24 +1,27 @@
-﻿<form style="display:none" class="writeMessage page" autocomplete="off">
-    <div class="row mb-3">
-        <div class="col-sm-2">
-            <label for="inputReciever" class="col-sm-2 col-form-label text-center">Получатель</label>
+﻿<div style="display:none" class="writeMessage page">
+    <form autocomplete="off">
+        <div class="row mb-3">
+            <div class="col-sm-2">
+                <label for="inputReciever" class="col-sm-2 col-form-label text-center">Получатель</label>
+            </div>
+            <div class="col-sm-10 autocomplete">
+                <input type="text" class="form-control" id="inputReciever" name="reciever" placeholder="Имя получателя">
+            </div>
         </div>
-        <div class="col-sm-10 autocomplete">
-            <input type="text" class="form-control" id="inputReciever" name="reciever" placeholder="Имя получателя">
+        <div class="row mb-3">
+            <div class="col-sm-2">
+                <label for="inputTitle" class="col-sm-2 col-form-label text-center">Тема</label>
+            </div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputTitle" name="title" placeholder="Тема">
+            </div>
         </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-sm-2">
-            <label for="inputTitle" class="col-sm-2 col-form-label text-center">Тема</label>
+        <div class="row mb-3">
+            <div class="col">
+                <textarea class="form-control md-textarea" id="inputBody" rows="8" name="body" placeholder="Введите сообщение"></textarea>
+            </div>
         </div>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputTitle" name="title" placeholder="Тема">
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col">
-            <textarea class="form-control md-textarea" id="inputBody" rows="8" name="body" placeholder="Введите сообщение"></textarea>
-        </div>
-    </div>
-    <button class="btn btn-primary" id="sendMessageButton">Отправить</button>
-</form>
+
+    </form>
+    <button class="btn btn-primary" id="sendMessageButton" onclick="sendMessage()">Отправить</button>
+</div>

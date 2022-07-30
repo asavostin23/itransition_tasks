@@ -39,8 +39,6 @@ body {
     border-top: none;
     z-index: 99;
     top: 100%;
-    /*left: 0;
-    right: 0;*/
 }
 
     .autocomplete-items div {
@@ -57,4 +55,7 @@ body {
 .autocomplete-active {
     background-color: DodgerBlue !important;
     color: #ffffff;
+}
+.popover{
+    
 }

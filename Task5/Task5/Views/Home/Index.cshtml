@@ -1,6 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Task5";
 }
+<nav class="nav mb-3">
+    <a class="nav-item nav-link" onclick="switchPage('inbox')">
+        <i class="bi-envelope-open"></i> Входящие
+    </a>
+    <a class="nav-item nav-link" onclick="switchPage('writeMessage')">
+        <i class="bi-pen"></i> Написать письмо
+    </a>
+</nav>
 <input type="hidden" id="userName" value="@ViewBag.UserName" />
 <div class="inbox page">
     <div class="text-center">
