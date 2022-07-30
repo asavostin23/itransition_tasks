@@ -10,12 +10,12 @@ async function hubConnect() {
         const hubConnection = new signalR.HubConnectionBuilder()
             .withUrl('/Messages')
             .build();
-        hubConnection.serverTimeoutInMilliseconds = 100000;
+        hubConnection.serverTimeoutInMilliseconds = 600000;
         hubConnection.on('ReceiveMessages', messages => {
             let messagesTable = document.querySelector('#messagesTable');
             messagesTable.innerHTML = '<tbody>';
             for (let message of messages) {
-                messagesTable.innerHTML += '<tr><td>' + message.sender + '</td><td>' + message.title + '</td><td>' + message.createdDate + '</td></tr>';
+                messagesTable.innerHTML += '<tr><td>' + message.sender + '</td><td> <button type="button" class="btn-no-style" data-toggle="popover" title="' + message.body +'">'+message.title+'</button></td><td>' + message.createdDate + '</td></tr>';
             }
             messagesTable.innerHTML += '</tbody>';
             if (document.querySelector('.inbox').style.display == 'none')
@@ -28,6 +28,9 @@ async function hubConnect() {
 
         await hubConnection.invoke('Register', userName);
         await hubConnection.invoke('SendMessages');
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
     }
 }
 hubConnect();
