@@ -20,7 +20,7 @@ namespace Task6.Controllers
             Random rand = new Random();
             int num = rand.Next();
             bool isMale = num % 2 == 0;
-            string? surname, name;
+            string? surname, name, patronymic;
             surname = db.SurnamesBy
                 .Where(x => x.IsMale == isMale)
                 .Skip(num % db.SurnamesBy.Where(x => x.IsMale == isMale).Count())
@@ -28,6 +28,10 @@ namespace Task6.Controllers
             name = db.NamesBy
                 .Where(x => x.IsMale == isMale)
                 .Skip(num % db.NamesBy.Where(x => x.IsMale == isMale).Count())
+                .First().Name;
+            patronymic = db.PatronymicsBy
+                .Where(x => x.IsMale == isMale)
+                .Skip(num % db.PatronymicsBy.Where(x => x.IsMale == isMale).Count())
                 .First().Name;
             Settlement settlement = db.SettlementsBy.Skip(num % db.SettlementsBy.Count()).First();
             StringBuilder adress = new();
@@ -38,8 +42,10 @@ namespace Task6.Controllers
                 if ((num & 4) > 0)
                     adress.Append($"{settlement.District}, ");
             }
-            adress.Append($"{settlement.Type} {settlement.Name}");
-            PersonViewModel person = new(surname ?? "undefined", name ?? "undefined", adress.ToString(), num);
+            adress.Append($"{settlement.Type} {settlement.Name}, д. {num % 100}");
+            if (settlement.Type == "г.")
+                adress.Append($" , кв. {num % 300}");
+            PersonViewModel person = new(surname ?? "undefined", name ?? "undefined", patronymic ?? "undefined", adress.ToString(), num);
             return View(person);
         }
 

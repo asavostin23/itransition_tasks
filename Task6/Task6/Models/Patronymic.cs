@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Task6
+﻿namespace Task6.Models
 {
-    public partial class Surname
+    public partial class Patronymic
     {
         public string? Name { get; set; }
         public bool? IsMale { get; set; }

@@ -16,8 +16,7 @@ namespace Task6
         public DbSet<Settlement> SettlementsBy { get; set; } = null!;
         public DbSet<Surname> SurnamesBy { get; set; } = null!;
         public DbSet<Street> StreetsBy { get; set; } = null!;
-
-
+        public DbSet<Patronymic> PatronymicsBy { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Firstname>(entity =>
@@ -51,6 +50,19 @@ namespace Task6
                 entity.HasKey(entity => entity.Id);
 
                 entity.ToTable("Surnames_by");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.Name).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Patronymic>(entity =>
+            {
+                entity.HasKey(entity => entity.Id);
+
+                entity.ToTable("Patronymics_by");
 
                 entity.Property(e => e.Id)
                     .ValueGeneratedOnAdd()

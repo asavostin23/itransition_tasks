@@ -7,7 +7,6 @@ namespace Task6
     {
         public string Name { get; set; } = null!;
         public bool IsMale { get; set; }
-        public bool IsFemale { get; set; }
         public int Id { get; set; }
     }
 }
