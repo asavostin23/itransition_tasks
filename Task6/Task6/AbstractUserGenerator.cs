@@ -7,7 +7,6 @@ namespace Task6
     {
         protected virtual int Seed { get; set; }
         public abstract ICollection<PersonViewModel> GetPeople(int page);
-        public abstract ICollection<PersonViewModel> GetFirstPage();
 
         protected AbstractUserGenerator(int seed)
         {

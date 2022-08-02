@@ -17,10 +17,7 @@ namespace Task6.Controllers
 
         public IActionResult Index()
         {
-            int seed = 0;/////////////
-            AbstractUserGenerator userGenerator = new UserGeneratorBy(db, seed);
-            return View(userGenerator.GetFirstPage());
+            return View();
         }
-
     }
 }

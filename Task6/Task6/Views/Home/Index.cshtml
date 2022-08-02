@@ -1,36 +1,29 @@
 ﻿@{
     ViewData["Title"] = "Главная";
+    int i = 1;
 }
 @model ICollection<PersonViewModel>
-
+<label for="seedInput">Seed</label>
+<input type="number" id="seedInput" name="seed" class="form-control mb-1" min="0" value="0" required>
+<select class="form-select mb-1" id="selectRegion">
+    <option value="by" selected>BY</option>
+    <option value="uk" disabled>UK</option>
+    <option value="pl" disabled>PL</option>
+</select>
+<button id="submitButton" class="btn btn-primary mb-1">ОК</button>
 <div class="text-center">
-    <table>
-        <thead>
+    <table class="table table-dark table-striped table-bordered table-hover table-responsive">
+        <thead class="table-light">
             <tr>
-                <td>Номер</td>
-                <td>Id</td>
-                <td>Фамилия</td>
-                <td>Имя</td>
-                <td>Отчество</td>
-                <td>Адрес</td>
+                <th>Номер</th>
+                <th>Id</th>
+                <th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
+                <th>Адрес</th>
             </tr>
         </thead>
-        <tbody>
-            @{
-                int i = 1;
-            }
-            @foreach (PersonViewModel person in Model)
-            {
-                <tr>
-                    <td>@(i++)</td>
-                    <td>@person.UniqueId</td>
-                    <td>@person.Surname</td>
-                    <td>@person.Name</td>
-                    <td>@person.Patronymic</td>
-                    <td>@person.Adress</td>
-                </tr>
-            }
+        <tbody id="main-table-body">
         </tbody>
     </table>
-
 </div>

@@ -53,12 +53,6 @@ namespace Task6
             }
             return people;
         }
-        public override List<PersonViewModel> GetFirstPage()
-        {
-            List<PersonViewModel> firstPage = GetPeople(0);
-            firstPage.AddRange(GetPeople(1));
-            return firstPage;
-        }
         public UserGeneratorBy(task6dbContext db, int seed) : base(seed)
         {
             this.db = db;
