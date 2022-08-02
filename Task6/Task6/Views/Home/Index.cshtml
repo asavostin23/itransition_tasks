@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Главная";
 }
-@model PersonViewModel
+@model ICollection<PersonViewModel>
 
 <div class="text-center">
     <table>
@@ -16,14 +16,20 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>@Model.UniqueId</td>
-                <td>@Model.Surname</td>
-                <td>@Model.Name</td>
-                <td>@Model.Patronymic</td>
-                <td>@Model.Adress</td>
-            </tr>
+            @{
+                int i = 1;
+            }
+            @foreach (PersonViewModel person in Model)
+            {
+                <tr>
+                    <td>@(i++)</td>
+                    <td>@person.UniqueId</td>
+                    <td>@person.Surname</td>
+                    <td>@person.Name</td>
+                    <td>@person.Patronymic</td>
+                    <td>@person.Adress</td>
+                </tr>
+            }
         </tbody>
     </table>
 
