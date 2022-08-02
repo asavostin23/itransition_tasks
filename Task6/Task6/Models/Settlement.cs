@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Task6
 {
-    public partial class SettlementsBy
+    public partial class Settlement
     {
         public string? Name { get; set; }
         public string? Region { get; set; }

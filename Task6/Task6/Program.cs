@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<Task6.task6dbContext>(options => options.UseSqlServer("DefaultConnection"));
+builder.Services.AddDbContext<Task6.task6dbContext>(options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 if (!app.Environment.IsDevelopment())

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Task6
 {
-    public partial class SurnamesBy
+    public partial class Surname
     {
         public string? Name { get; set; }
         public bool? IsMale { get; set; }

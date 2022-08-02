@@ -12,22 +12,22 @@ namespace Task6
         {
         }
 
-        public DbSet<NamesBy> NamesBy { get; set; } = null!;
-        public DbSet<SettlementsBy> SettlementsBy { get; set; } = null!;
-        public DbSet<SurnamesBy> SurnamesBy { get; set; } = null!;
-        public DbSet<StreetsBy> StreetsBy { get; set; } = null!;
+        public DbSet<Firstname> NamesBy { get; set; } = null!;
+        public DbSet<Settlement> SettlementsBy { get; set; } = null!;
+        public DbSet<Surname> SurnamesBy { get; set; } = null!;
+        public DbSet<Street> StreetsBy { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<NamesBy>(entity =>
+            modelBuilder.Entity<Firstname>(entity =>
             {
                 entity.ToTable("Names_by");
 
                 entity.Property(e => e.Name).HasMaxLength(50);
             });
 
-            modelBuilder.Entity<SettlementsBy>(entity =>
+            modelBuilder.Entity<Settlement>(entity =>
             {
                 entity.HasKey(entity => entity.Id);
 
@@ -46,7 +46,7 @@ namespace Task6
                 entity.Property(e => e.Type).HasMaxLength(255);
             });
 
-            modelBuilder.Entity<SurnamesBy>(entity =>
+            modelBuilder.Entity<Surname>(entity =>
             {
                 entity.HasKey(entity => entity.Id);
 
@@ -59,7 +59,7 @@ namespace Task6
                 entity.Property(e => e.Name).HasMaxLength(50);
             });
 
-            modelBuilder.Entity<StreetsBy>(entity =>
+            modelBuilder.Entity<Street>(entity =>
             {
                 entity.HasKey(entity => entity.Id);
 

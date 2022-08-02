@@ -1,8 +1,28 @@
 ﻿@{
     ViewData["Title"] = "Главная";
 }
+@model PersonViewModel
 
 <div class="text-center">
-    
-    
+    <table>
+        <thead>
+            <tr>
+                <td>Номер</td>
+                <td>Id</td>
+                <td>Фамилия</td>
+                <td>Имя</td>
+                <td>Адрес</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>@Model.UniqueId</td>
+                <td>@Model.Surname</td>
+                <td>@Model.Name</td>
+                <td>@Model.Adress</td>
+            </tr>
+        </tbody>
+    </table>
+
 </div>
