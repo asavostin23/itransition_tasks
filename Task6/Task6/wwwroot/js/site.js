@@ -1,6 +1,7 @@
 ﻿document.querySelector('#submitButton').addEventListener('click', async () => {
     let seed = document.querySelector('#seedInput').value;
-    let url = '/peoplegen/' + document.querySelector('#selectRegion').value + '?seed=' + seed + '&';
+    let errorLevel = document.querySelector('#errorLevelTextInput').value;
+    let url = '/PeopleGen/' + document.querySelector('#selectRegion').value + '?seed=' + seed + '&errorLevel=' + errorLevel + '&';
     let firstPageResponse = await fetch(url + 'page=1');
     let secondPageResponse = await fetch(url + 'page=2');
     if (firstPageResponse.ok && secondPageResponse.ok) {
@@ -42,7 +43,8 @@ async function loadPage(page) {
     if (isLoading) return;
     isLoading = true;
     let seed = document.querySelector('#seedInput').value;
-    let url = '/peoplegen/' + document.querySelector('#selectRegion').value + '?seed=' + seed + '&page=' + page;
+    let errorLevel = document.querySelector('#errorLevelTextInput').value;
+    let url = '/PeopleGen/' + document.querySelector('#selectRegion').value + '?seed=' + seed + '&page=' + page + '&errorLevel=' + errorLevel;
     let response = await fetch(url);
     if (response.ok) {
         let people = await response.json();

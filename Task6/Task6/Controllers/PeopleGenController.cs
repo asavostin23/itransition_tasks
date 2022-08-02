@@ -14,12 +14,12 @@ namespace Task6.Controllers
             this.db = db;
         }
         [HttpGet("{region}")]
-        public IActionResult Get(string region, int seed, int page)
+        public IActionResult Get(string region, int seed, int page, float errorLevel)
         {
             switch (region)
             {
                 case "by":
-                    userGenerator = new UserGeneratorBy(db, seed);
+                    userGenerator = new UserGeneratorBy(db, seed, errorLevel);
                     break;
             }
             return new JsonResult(userGenerator.GetPeople(page));

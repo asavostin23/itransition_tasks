@@ -4,11 +4,25 @@ namespace Task6
 {
     public class UserGeneratorBy : AbstractUserGenerator
     {
-        task6dbContext db;
+        protected task6dbContext db;
+        private float errorLevel;
+        protected float ErrorLevel {
+            get
+            {
+                return errorLevel;
+            }
+            set
+            {
+                if (value > 0 && value <= 1000) errorLevel = (float)Math.Round(value, 1);
+                else
+                    errorLevel = 0;
+            }
+        }
         public override List<PersonViewModel> GetPeople(int page)
         {
             Random rand = new Random(Seed + page);
             List<PersonViewModel> people = new(10);
+            PersonViewModel tempPerson;
             for (int i = 0; i < 10; i++)
             {
                 int num = rand.Next();
@@ -57,13 +71,17 @@ namespace Task6
                     3 => " (44) "
                 };
                 phone += (num % 10000000).ToString();
-                people.Add(new(num, surname ?? "undefined", name ?? "undefined", patronymic ?? "undefined", adress.ToString(), phone));
+                tempPerson = new PersonViewModel(num, surname ?? "undefined", name ?? "undefined", patronymic ?? "undefined", adress.ToString(), phone);
+                AbstractPersonErrorAdder personErrorAdder = new PersonErrorAdderBy(tempPerson, ErrorLevel);
+                personErrorAdder.AddErrors();
+                people.Add(tempPerson);
             }
             return people;
         }
-        public UserGeneratorBy(task6dbContext db, int seed) : base(seed)
+        public UserGeneratorBy(task6dbContext db, int seed, float errorLevel) : base(seed)
         {
             this.db = db;
+            ErrorLevel = errorLevel;
         }
     }
 }
