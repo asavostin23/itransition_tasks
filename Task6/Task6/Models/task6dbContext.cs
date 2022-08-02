@@ -32,8 +32,6 @@ namespace Task6
 
                 entity.ToTable("Settlements_by");
 
-                entity.Property(e => e.District).HasMaxLength(255);
-
                 entity.Property(e => e.Id)
                     .ValueGeneratedOnAdd()
                     .HasColumnName("ID");
@@ -43,6 +41,8 @@ namespace Task6
                 entity.Property(e => e.Region).HasMaxLength(255);
 
                 entity.Property(e => e.Type).HasMaxLength(255);
+
+                entity.Property(e => e.District).HasMaxLength(255);
             });
 
             modelBuilder.Entity<Surname>(entity =>

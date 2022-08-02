@@ -33,17 +33,29 @@ namespace Task6.Controllers
                 .Where(x => x.IsMale == isMale)
                 .Skip(num % db.PatronymicsBy.Where(x => x.IsMale == isMale).Count())
                 .First().Name;
-            Settlement settlement = db.SettlementsBy.Skip(num % db.SettlementsBy.Count()).First();
+
+            Settlement settlement;
             StringBuilder adress = new();
-            if (settlement.Type == "г.")
+            if ((num & 8) > 0)
             {
+                settlement = db.SettlementsBy
+                    .Where(settlement => settlement.Type == "г.")
+                    .Skip(num % db.SettlementsBy.Where(settlement => settlement.Type == "г.").Count())
+                    .First();
                 if ((num & 2) > 0)
                     adress.Append($"{settlement.Region}, ");
-                if ((num & 4) > 0)
+                if ((num & 4) > 0 && settlement.District != null)
                     adress.Append($"{settlement.District}, ");
             }
+            else
+            {
+                settlement = db.SettlementsBy
+                    .Where(settlement => settlement.Type != "г.")
+                    .Skip(num % db.SettlementsBy.Where(settlement => settlement.Type != "г.").Count())
+                    .First();
+            }
             adress.Append($"{settlement.Type} {settlement.Name}, д. {num % 100}");
-            if (settlement.Type == "г.")
+            if ((num & 8) > 0)
                 adress.Append($" , кв. {num % 300}");
             PersonViewModel person = new(surname ?? "undefined", name ?? "undefined", patronymic ?? "undefined", adress.ToString(), num);
             return View(person);
