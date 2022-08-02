@@ -56,6 +56,5 @@ async function loadPage(page) {
     isLoading = false;
 }
 
-
 let nextPage = 1;
 let isLoading = false;
