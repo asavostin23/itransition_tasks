@@ -49,7 +49,15 @@ namespace Task6
                 adress.Append($"{settlement.Type} {settlement.Name}, д. {num % 100}");
                 if ((num & 8) > 0)
                     adress.Append($" , кв. {num % 300}");
-                people.Add(new(surname ?? "undefined", name ?? "undefined", patronymic ?? "undefined", adress.ToString(), num));
+                string phone = "+375 " + (num % 4) switch
+                {
+                    0 => " (29) ",
+                    1 => " (25) ",
+                    2 => " (33) ",
+                    3 => " (44) "
+                };
+                phone += (num % 10000000).ToString();
+                people.Add(new(num, surname ?? "undefined", name ?? "undefined", patronymic ?? "undefined", adress.ToString(), phone));
             }
             return people;
         }

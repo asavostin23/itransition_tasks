@@ -7,13 +7,15 @@
         public string Patronymic { get; set; }
         public string Adress { get; set; }
         public int UniqueId { get; set; }
-        public PersonViewModel(string surname, string name, string patronymic, string adress, int id)
+        public string Phone { get; set; }
+        public PersonViewModel(int id, string surname, string name, string patronymic, string adress, string phone)
         {
             Name = name;
             Surname = surname;
             Patronymic = patronymic;
             Adress = adress;
             UniqueId = id;
+            Phone = phone;
         }
     }
 }
