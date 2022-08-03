@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Task6
 {
-    public partial class Firstname
+    public abstract partial class Firstname
     {
         public string Name { get; set; } = null!;
         public bool IsMale { get; set; }

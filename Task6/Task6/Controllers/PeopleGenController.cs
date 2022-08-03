@@ -21,6 +21,9 @@ namespace Task6.Controllers
                 case "by":
                     userGenerator = new UserGeneratorBy(db, seed, errorLevel);
                     break;
+                case "pl":
+                    userGenerator = new UserGeneratorPl(db, seed, errorLevel);
+                    break;
             }
             return new JsonResult(userGenerator.GetPeople(page));
         }

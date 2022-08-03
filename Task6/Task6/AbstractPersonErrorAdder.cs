@@ -19,14 +19,14 @@ namespace Task6
                     errorLevel = 0;
             }
         }
+        protected char[] symbols;
         public AbstractPersonErrorAdder(float errorLevel)
         {
             ErrorLevel = errorLevel;
         }
-        public abstract PersonViewModel AddErrors(PersonViewModel person);
         protected virtual void AddSwapSymbolError(PersonViewModel person, int step)
         {
-            if ((person.Name.Length * person.Surname.Length * person.Patronymic.Length * person.Adress.Length * person.Phone.Length) == 0)
+            if ((person.Name.Length * person.Surname.Length * person.Adress.Length * person.Phone.Length) == 0)
                 return;
             string data;
             switch ((person.UniqueId + step + 3) % 5)
@@ -38,12 +38,9 @@ namespace Task6
                     data = person.Surname;
                     break;
                 case 2:
-                    data = person.Patronymic;
-                    break;
-                case 3:
                     data = person.Adress;
                     break;
-                case 4:
+                case 3:
                     data = person.Phone;
                     break;
                 default:
@@ -64,19 +61,16 @@ namespace Task6
                     person.Surname = tempData.ToString();
                     break;
                 case 2:
-                    person.Patronymic = tempData.ToString();
-                    break;
-                case 3:
                     person.Adress = tempData.ToString();
                     break;
-                case 4:
+                case 3:
                     person.Phone = tempData.ToString();
                     break;
             }
         }
         protected virtual void AddSymbolRemovingError(PersonViewModel person, int step)
         {
-            if ((person.Name.Length * person.Surname.Length * person.Patronymic.Length * person.Adress.Length * person.Phone.Length) == 0)
+            if ((person.Name.Length * person.Surname.Length * person.Adress.Length * person.Phone.Length) == 0)
                 return;
             switch ((person.UniqueId + step + 1) % 5)
             {
@@ -87,13 +81,52 @@ namespace Task6
                     person.Surname = person.Surname.Remove((person.UniqueId + step) % person.Surname.Length, 1);
                     break;
                 case 2:
-                    person.Patronymic = person.Patronymic.Remove((person.UniqueId + step) % person.Patronymic.Length, 1);
-                    break;
-                case 3:
                     person.Adress = person.Adress.Remove((person.UniqueId + step) % person.Adress.Length, 1);
                     break;
-                case 4:
+                case 3:
                     person.Phone = person.Phone.Remove((person.UniqueId + step) % person.Phone.Length, 1);
+                    break;
+            };
+        }
+        public virtual PersonViewModel AddErrors(PersonViewModel person)
+        {
+            int errorCount = (int)Math.Truncate(errorLevel);
+            if (person.UniqueId % 100 < (errorLevel - Math.Truncate(errorLevel)) * 100)
+                errorCount++;
+            for (int i = 0; i < errorCount; i++)
+            {
+                switch ((person.UniqueId + i) % 3)
+                {
+                    case 0:
+                        AddSymbolRemovingError(person, i);
+                        break;
+                    case 1:
+                        AddRandomSymbolError(person, i);
+                        break;
+                    case 2:
+                        AddSwapSymbolError(person, i);
+                        break;
+                }
+            }
+            return person;
+        }
+        protected virtual void AddRandomSymbolError(PersonViewModel person, int step)
+        {
+            if ((person.Name.Length * person.Surname.Length  * person.Adress.Length * person.Phone.Length) == 0)
+                return;
+            switch ((person.UniqueId + step + 2) % 5)
+            {
+                case 0:
+                    person.Name = person.Name.Insert((person.UniqueId + step) % person.Name.Length, symbols[(person.UniqueId + step) % 43].ToString());
+                    break;
+                case 1:
+                    person.Surname = person.Surname.Insert((person.UniqueId + step) % person.Surname.Length, symbols[(person.UniqueId + step) % 43].ToString());
+                    break;
+                case 2:
+                    person.Adress = person.Adress.Insert((person.UniqueId + step) % person.Adress.Length, symbols[(person.UniqueId + step) % 43].ToString());
+                    break;
+                case 3:
+                    person.Phone = person.Phone.Insert((person.UniqueId + step) % person.Phone.Length, symbols[(person.UniqueId + step) % 43].ToString());
                     break;
             };
         }

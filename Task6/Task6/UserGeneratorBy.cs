@@ -4,20 +4,6 @@ namespace Task6
 {
     public class UserGeneratorBy : AbstractUserGenerator
     {
-        protected task6dbContext db;
-        private float errorLevel;
-        protected float ErrorLevel {
-            get
-            {
-                return errorLevel;
-            }
-            set
-            {
-                if (value > 0 && value <= 1000) errorLevel = (float)Math.Round(value, 1);
-                else
-                    errorLevel = 0;
-            }
-        }
         public override List<PersonViewModel> GetPeople(int page)
         {
             Random rand = new Random(Seed + page);
@@ -40,7 +26,7 @@ namespace Task6
                     .Where(x => x.IsMale == isMale)
                     .Skip(num % db.PatronymicsBy.Where(x => x.IsMale == isMale).Count())
                     .First().Name;
-                Settlement settlement;
+                SettlementBy settlement;
                 System.Text.StringBuilder adress = new();
                 if ((num & 8) > 0)
                 {
@@ -60,9 +46,15 @@ namespace Task6
                         .Skip(num % db.SettlementsBy.Where(settlement => settlement.Type != "г.").Count())
                         .First();
                 }
-                adress.Append($"{settlement.Type} {settlement.Name}, д. {num % 100}");
+                adress.Append($"{settlement.Type} {settlement.Name}");
                 if ((num & 8) > 0)
-                    adress.Append($" , кв. {num % 300}");
+                {
+                    adress.Append($" , {db.StreetsBy.Skip(num % db.StreetsBy.Count()).First().Name}");
+                    adress.Append($" , кв. {(num % 300) + 1}");
+                }
+                adress.Append($", д. {(num % 100) + 1}");
+                if ((num & 16) > 0)
+                    adress.Append($", корп. {(num % 20) + 1}");
                 string phone = "+375 " + (num % 4) switch
                 {
                     0 => " (29) ",
@@ -78,10 +70,7 @@ namespace Task6
             }
             return people;
         }
-        public UserGeneratorBy(task6dbContext db, int seed, float errorLevel) : base(seed)
-        {
-            this.db = db;
-            ErrorLevel = errorLevel;
-        }
+        public UserGeneratorBy(task6dbContext db, int seed, float errorLevel) : base(db, seed, errorLevel)
+        { }
     }
 }
