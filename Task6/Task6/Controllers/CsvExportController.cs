@@ -31,16 +31,16 @@ namespace Task6.Controllers
                     break;
             }
             List<PersonViewModel> people = new List<PersonViewModel>();
-            for (int i = 1; i<= lastPage; i++)
+            for (int i = 1; i <= lastPage; i++)
             {
                 people.AddRange(userGenerator.GetPeople(i));
             }
             string virtualPath = Path.Combine(_appEnvironment.ContentRootPath, "Files\\temp.csv");
-            using(StreamWriter streamWriter = new StreamWriter(virtualPath, false))
+            using (StreamWriter streamWriter = new StreamWriter(virtualPath, false, System.Text.Encoding.UTF8))
             {
                 CsvConfiguration csvConfig = new CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture);
                 csvConfig.Delimiter = ";";
-                using(CsvWriter csvWriter = new CsvWriter(streamWriter, csvConfig))
+                using (CsvWriter csvWriter = new CsvWriter(streamWriter, csvConfig))
                 {
                     csvWriter.WriteRecords(people);
                 }

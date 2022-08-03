@@ -18,6 +18,7 @@
         }
         document.querySelector('table tbody').innerHTML = htmlString;
     }
+    document.querySelector('#csvExportButton').disabled = false;
     isLoading = false;
 });
 
@@ -61,6 +62,15 @@ async function loadPage() {
     isLoading = false;
     nextPage++;
 }
+
+document.querySelector('#csvExportButton').addEventListener('click', async () => {
+    isLoading = true;
+    let seed = document.querySelector('#seedInput').value;
+    let errorLevel = document.querySelector('#errorLevelTextInput').value;
+    let url = '/csvexport/get?region=' + document.querySelector('#selectRegion').value + '&seed=' + seed + '&lastpage=' + String(nextPage - 1) + '&errorLevel=' + errorLevel;
+    window.open(url);
+    isLoading = false;
+});
 
 let nextPage = 3;
 let isLoading = true;
