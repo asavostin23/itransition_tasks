@@ -72,8 +72,8 @@ namespace Task6
                 };
                 phone += (num % 10000000).ToString();
                 tempPerson = new PersonViewModel(num, surname ?? "undefined", name ?? "undefined", patronymic ?? "undefined", adress.ToString(), phone);
-                AbstractPersonErrorAdder personErrorAdder = new PersonErrorAdderBy(tempPerson, ErrorLevel);
-                personErrorAdder.AddErrors();
+                AbstractPersonErrorAdder personErrorAdder = new PersonErrorAdderBy(ErrorLevel);
+                personErrorAdder.AddErrors(tempPerson);
                 people.Add(tempPerson);
             }
             return people;
