@@ -1,9 +1,13 @@
 ﻿document.querySelector('#submitButton').addEventListener('click', async () => {
+    nextPage = 3;
+    isLoading = true;
     let seed = document.querySelector('#seedInput').value;
     let errorLevel = document.querySelector('#errorLevelTextInput').value;
     let url = '/PeopleGen/' + document.querySelector('#selectRegion').value + '?seed=' + seed + '&errorLevel=' + errorLevel + '&';
-    let firstPageResponse = await fetch(url + 'page=1');
-    let secondPageResponse = await fetch(url + 'page=2');
+    let firstPageFetch = fetch(url + 'page=1');
+    let secondPageFetch = fetch(url + 'page=2');
+    let firstPageResponse = await firstPageFetch;
+    let secondPageResponse = await secondPageFetch;
     if (firstPageResponse.ok && secondPageResponse.ok) {
         let people = await firstPageResponse.json();
         people = people.concat(await secondPageResponse.json());
@@ -14,8 +18,7 @@
         }
         document.querySelector('table tbody').innerHTML = htmlString;
     }
-    window.addEventListener("scroll", throttle(checkPosition, 350));
-    window.addEventListener("resize", throttle(checkPosition, 350));
+    isLoading = false;
 });
 
 async function checkPosition() {
@@ -25,7 +28,7 @@ async function checkPosition() {
     const threshold = height - screenHeight / 4;
     const position = scrolled + screenHeight;
     if (position >= threshold) {
-        await loadPage(nextPage++);
+        await loadPage();
     }
 }
 function throttle(callee, timeout) {
@@ -39,12 +42,12 @@ function throttle(callee, timeout) {
         }, timeout);
     }
 }
-async function loadPage(page) {
+async function loadPage() {
     if (isLoading) return;
     isLoading = true;
     let seed = document.querySelector('#seedInput').value;
     let errorLevel = document.querySelector('#errorLevelTextInput').value;
-    let url = '/PeopleGen/' + document.querySelector('#selectRegion').value + '?seed=' + seed + '&page=' + page + '&errorLevel=' + errorLevel;
+    let url = '/PeopleGen/' + document.querySelector('#selectRegion').value + '?seed=' + seed + '&page=' + nextPage + '&errorLevel=' + errorLevel;
     let response = await fetch(url);
     if (response.ok) {
         let people = await response.json();
@@ -56,7 +59,10 @@ async function loadPage(page) {
         document.querySelector('table tbody').innerHTML += htmlString;
     }
     isLoading = false;
+    nextPage++;
 }
 
-let nextPage = 1;
-let isLoading = false;
+let nextPage = 3;
+let isLoading = true;
+window.addEventListener("scroll", throttle(checkPosition, 350));
+window.addEventListener("resize", throttle(checkPosition, 350));
