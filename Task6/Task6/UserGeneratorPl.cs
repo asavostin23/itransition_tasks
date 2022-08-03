@@ -32,7 +32,7 @@ namespace Task6
                         .Where(settlement => settlement.Type == "m.")
                         .Skip(num % db.SettlementsPl.Where(settlement => settlement.Type == "m.").Count())
                         .First();
-                    adress.Append($"{db.StreetsPl.Skip(num % db.StreetsBy.Count()).First().Name}");
+                    adress.Append($"{db.StreetsPl.Skip(num % db.StreetsPl.Count()).First().Name}");
                 }
                 else
                 {

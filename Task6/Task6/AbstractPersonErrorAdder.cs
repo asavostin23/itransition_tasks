@@ -117,16 +117,16 @@ namespace Task6
             switch ((person.UniqueId + step + 2) % 5)
             {
                 case 0:
-                    person.Name = person.Name.Insert((person.UniqueId + step) % person.Name.Length, symbols[(person.UniqueId + step) % 43].ToString());
+                    person.Name = person.Name.Insert((person.UniqueId + step) % person.Name.Length, symbols[(person.UniqueId + step) % symbols.Length].ToString());
                     break;
                 case 1:
-                    person.Surname = person.Surname.Insert((person.UniqueId + step) % person.Surname.Length, symbols[(person.UniqueId + step) % 43].ToString());
+                    person.Surname = person.Surname.Insert((person.UniqueId + step) % person.Surname.Length, symbols[(person.UniqueId + step) % symbols.Length].ToString());
                     break;
                 case 2:
-                    person.Adress = person.Adress.Insert((person.UniqueId + step) % person.Adress.Length, symbols[(person.UniqueId + step) % 43].ToString());
+                    person.Adress = person.Adress.Insert((person.UniqueId + step) % person.Adress.Length, symbols[(person.UniqueId + step) % symbols.Length].ToString());
                     break;
                 case 3:
-                    person.Phone = person.Phone.Insert((person.UniqueId + step) % person.Phone.Length, symbols[(person.UniqueId + step) % 43].ToString());
+                    person.Phone = person.Phone.Insert((person.UniqueId + step) % person.Phone.Length, symbols[(person.UniqueId + step) % symbols.Length].ToString());
                     break;
             };
         }

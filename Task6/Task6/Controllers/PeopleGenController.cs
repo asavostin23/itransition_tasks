@@ -18,11 +18,14 @@ namespace Task6.Controllers
         {
             switch (region)
             {
-                case "by":
-                    userGenerator = new UserGeneratorBy(db, seed, errorLevel);
-                    break;
                 case "pl":
                     userGenerator = new UserGeneratorPl(db, seed, errorLevel);
+                    break;
+                case "uk":
+                    userGenerator = new UserGeneratorUk(db, seed, errorLevel);
+                    break;
+                default:
+                    userGenerator = new UserGeneratorBy(db, seed, errorLevel);
                     break;
             }
             return new JsonResult(userGenerator.GetPeople(page));

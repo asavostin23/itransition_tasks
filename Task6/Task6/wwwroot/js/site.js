@@ -10,7 +10,7 @@
         let htmlString = '';
         let i = 1;
         for (let person of people) {
-            htmlString += '<tr><td>' + (i++).toString() + '</td><td>' + person.uniqueId + '</td><td>' + person.surname + '</td><td>' + person.name + '</td><td>' + person.patronymic + '</td><td>' + person.adress + '</td><td>' + person.phone + '</td></tr>';
+            htmlString += '<tr><td>' + (i++).toString() + '</td><td>' + person.uniqueId + '</td><td>' + person.surname + ' ' + person.name + ' ' + person.patronymic + '</td><td>' + person.adress + '</td><td>' + person.phone + '</td></tr>';
         }
         document.querySelector('table tbody').innerHTML = htmlString;
     }
@@ -51,7 +51,7 @@ async function loadPage(page) {
         let htmlString = '';
         let i = Number(document.querySelector('table tbody').lastChild.firstChild.innerHTML) + 1;
         for (let person of people) {
-            htmlString += '<tr><td>' + (i++).toString() + '</td><td>' + person.uniqueId + '</td><td>' + person.surname + '</td><td>' + person.name + '</td><td>' + person.patronymic + '</td><td>' + person.adress + '</td><td>' + person.phone + '</td></tr>';
+            htmlString += '<tr><td>' + (i++).toString() + '</td><td>' + person.uniqueId + '</td><td>' + person.surname + ' ' + person.name + ' ' + person.patronymic + '</td><td>' + person.adress + '</td><td>' + person.phone + '</td></tr>';
         }
         document.querySelector('table tbody').innerHTML += htmlString;
     }
