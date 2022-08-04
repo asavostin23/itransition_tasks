@@ -21,7 +21,6 @@
     document.querySelector('#csvExportButton').disabled = false;
     isLoading = false;
 });
-
 async function checkPosition() {
     const height = document.body.offsetHeight;
     const screenHeight = window.innerHeight;
@@ -63,6 +62,10 @@ async function loadPage() {
     nextPage++;
 }
 
+
+document.querySelector('#errorLevelTextInput').addEventListener('input', (e) => {
+    document.querySelector('#errorLevelRangeInput').value = e.target.value <= 10 ? e.target.value : 10;
+});
 document.querySelector('#csvExportButton').addEventListener('click', async () => {
     isLoading = true;
     let seed = document.querySelector('#seedInput').value;

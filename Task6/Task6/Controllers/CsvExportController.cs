@@ -35,7 +35,7 @@ namespace Task6.Controllers
             {
                 people.AddRange(userGenerator.GetPeople(i));
             }
-            string virtualPath = Path.Combine(_appEnvironment.ContentRootPath, "Files\\temp.csv");
+            string virtualPath = Path.Combine(_appEnvironment.ContentRootPath, "temp.csv");
             using (StreamWriter streamWriter = new StreamWriter(virtualPath, false, System.Text.Encoding.UTF8))
             {
                 CsvConfiguration csvConfig = new CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture);
