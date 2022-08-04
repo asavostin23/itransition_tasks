@@ -53,8 +53,8 @@ namespace Task6
                     adress.Append($" , кв. {(num % 300) + 1}");
                 }
                 adress.Append($", д. {(num % 100) + 1}");
-                if ((num & 16) > 0)
-                    adress.Append($", корп. {(num % 20) + 1}");
+                if ((num & 16) > 0 && (num & 8) > 0)
+                    adress.Append($", корп. {(num % 10) + 1}");
                 string phone = "+375 " + (num % 4) switch
                 {
                     0 => " (29) ",
