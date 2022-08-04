@@ -62,7 +62,6 @@ async function loadPage() {
     nextPage++;
 }
 
-
 document.querySelector('#errorLevelTextInput').addEventListener('input', (e) => {
     document.querySelector('#errorLevelRangeInput').value = e.target.value <= 10 ? e.target.value : 10;
 });
@@ -73,6 +72,12 @@ document.querySelector('#csvExportButton').addEventListener('click', async () =>
     let url = '/csvexport/get?region=' + document.querySelector('#selectRegion').value + '&seed=' + seed + '&lastpage=' + String(nextPage - 1) + '&errorLevel=' + errorLevel;
     window.open(url);
     isLoading = false;
+});
+document.querySelector('#setRandomSeedButton').addEventListener('click', () => {
+    document.querySelector('#seedInput').value = Math.floor(Math.random() * 1000000000);
+});
+document.querySelector('#setZeroSeedButton').addEventListener('click', () => {
+    document.querySelector('#seedInput').value = 0;
 });
 
 let nextPage = 3;

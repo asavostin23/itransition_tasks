@@ -3,7 +3,9 @@
 }
 @model ICollection<PersonViewModel>
 <label for="seedInput">Seed</label>
-<input type="number" id="seedInput" name="seed" class="form-control mb-1" min="0" value="0" required>
+<input type="number" id="seedInput" name="seed" class="form-control mb-1" min="0" value="0" max="@int.MaxValue" required>
+<button id="setRandomSeedButton" class="btn btn-primary mb-1">Random</button>
+<button id="setZeroSeedButton" class="btn btn-danger mb-1">Zero</button>
 <select class="form-select mb-1" id="selectRegion">
     <option value="by" selected>BY</option>
     <option value="pl">PL</option>
